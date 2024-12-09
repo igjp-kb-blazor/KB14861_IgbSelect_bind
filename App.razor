@@ -1,0 +1,35 @@
+﻿<div style="max-width: 400px; margin: auto; padding: 24px; display: flex; flex-direction: column; gap: 24px;">
+    <div>
+        <IgbButton @onclick="@(() => { _selectedValue = "1"; })">りんごを選択</IgbButton>
+        <IgbButton @onclick="@(() => { _selectedValue = "2"; })">バナナを選択</IgbButton>
+    </div>
+
+    <div>
+        <IgbSelect @bind-Value="_selectedValue">
+            @foreach (var item in _data)
+            {
+                <IgbSelectItem Value="@item.Id">@item.Name</IgbSelectItem>
+            }
+        </IgbSelect>
+        <p>@(_selectedValue == null ? "何も選択されていません" : $"{_data.FirstOrDefault(f => f.Id == _selectedValue)?.Name}を選択しています")</p>
+        </div>
+</div>
+
+@code {
+    private string? _selectedValue { get; set; } = null;
+
+    private readonly IEnumerable<Fruit> _data = new Fruit[]
+    {
+        new Fruit{ Id = "1", Name = "りんご" },
+        new Fruit{ Id = "2", Name = "バナナ" },
+        new Fruit{ Id = "3", Name = "オレンジ" },
+        new Fruit{ Id = "4", Name = "パイナップル" },
+        new Fruit{ Id = "5", Name = "いちご" },
+    };
+
+    public class Fruit
+    {
+        public string? Id { get; set; }
+        public string? Name { get; set; }
+    }
+}
